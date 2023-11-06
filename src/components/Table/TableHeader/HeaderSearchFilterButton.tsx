@@ -26,6 +26,7 @@ export const HeaderSearchFilterButton = ({
       }
       title="Фильтр"
       trigger="click"
+      placement="bottomLeft"
     >
       <Button
         icon={<FilterOutlined />}

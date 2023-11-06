@@ -1,6 +1,7 @@
 import React from "react";
 import GigaTable from "./Table";
 import { DataType } from "./Table/types";
+import { ShowingColumnsProvider } from "~/store/ShowingColumnsProvider";
 
 const URL = "http://localhost:3001/data/";
 
@@ -28,7 +29,11 @@ const dataFetcher = async (queryString = "") => {
 };
 
 function TableImplementation() {
-  return <GigaTable dataFetcher={dataFetcher} />;
+  return (
+    <ShowingColumnsProvider>
+      <GigaTable dataFetcher={dataFetcher} />
+    </ShowingColumnsProvider>
+  );
 }
 
 export default TableImplementation;

@@ -1,5 +1,5 @@
 import React from "react";
-import AllFiltersResetButton from "./AllFiltersResetButton";
+import AllSettingsResetButton from "./AllSettingsResetButton";
 import ColumnsSelectorButton from "./ColumnsSelectorButton";
 import { SearchFilter } from "../types";
 import { HeaderToolBoxWrapper, TableNameWrapper } from "./StyledWrappers";
@@ -16,7 +16,7 @@ function HeaderToolBox({
       <TableNameWrapper>GigaTable</TableNameWrapper>
       <HeaderToolBoxWrapper>
         <ColumnsSelectorButton />
-        <AllFiltersResetButton
+        <AllSettingsResetButton
           setSearchFilterState={setSearchFilterState}
           searchFilterState={searchFilterState}
         />

@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Table } from "antd";
 import styled from "styled-components";
 
 export const SortWrapper = styled.div`
@@ -40,12 +40,13 @@ export const HeaderToolBoxWrapper = styled.div`
   left: 20px;
   z-index: 1;
   width: 80px;
-  background: white;
+  background: #f6fcfe;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  border: 1px solid gainsboro;
   border-radius: 5px;
+  height: 35px;
+  box-shadow: 0px 1px 3px 1px #828282;
 `;
 
 export const TableNameWrapper = styled.div`
@@ -56,4 +57,14 @@ export const TableNameWrapper = styled.div`
   font-family: monospace;
   text-shadow: 1px 1px #a7a7a7;
   font-weight: 900;
+`;
+
+export const CustomTable = styled(Table)`
+  tr.ant-table-row.ant-table-row-level-0:nth-child(2n-1) {
+    background-color: gainsboro;
+  }
+  td.ant-table-cell.ant-table-cell-row-hover {
+    background-color: unset !important;
+    color: #4096ff;
+  }
 `;

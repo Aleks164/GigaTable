@@ -1,19 +1,29 @@
 import React from "react";
-import { Select } from "antd";
+import { Checkbox } from "antd";
+import { CheckboxValueType } from "antd/es/checkbox/Group";
+import styled from "styled-components";
+import { useShowingColumns } from "~/store/useShowingColumns";
+import { defaultColumns } from "../utility/const";
+
+const CheckboxGroup = styled(Checkbox.Group)`
+  &.ant-checkbox-group {
+    display: grid;
+  }
+`;
 
 export function ColumnsSelector() {
-  const onChange = (value: ValueType, option: OptionType | OptionType[]) => {
-    console.log(value, option);
+  const { showingColumnsName, setShowingColumnsName } = useShowingColumns();
+  const onChange = (checkedValue: CheckboxValueType[]) => {
+    setShowingColumnsName(checkedValue as string[]);
   };
+
   return (
-    <Select
-      onChange={onChange}
-      options={[
-        { value: "jack", label: "Jack" },
-        { value: "lucy", label: "Lucy" },
-        { value: "Yiminghe", label: "yiminghe" },
-        { value: "disabled", label: "Disabled", disabled: true },
-      ]}
-    />
+    <CheckboxGroup onChange={onChange} value={showingColumnsName}>
+      {defaultColumns.map(({ dataIndex, title }) => (
+        <Checkbox key={`checkbox_group_${dataIndex}`} value={dataIndex}>
+          {title}
+        </Checkbox>
+      ))}
+    </CheckboxGroup>
   );
 }
