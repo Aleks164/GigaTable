@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import styled from "styled-components";
 import NoDataTemplate from "./NoDataTemplate";
 import { getRowKey } from "./utility/getRowKey";
@@ -15,10 +15,15 @@ import {
   SearchFilter,
   Sort,
 } from "./types";
+import HeaderToolBox from "./TableHeader/HeaderToolBox";
 
 const CustomTable = styled(Table)`
   tr.ant-table-row.ant-table-row-level-0:nth-child(2n-1) {
     background-color: gainsboro;
+  }
+  td.ant-table-cell.ant-table-cell-row-hover {
+    background-color: unset !important;
+    color: #4096ff;
   }
 `;
 
@@ -91,13 +96,19 @@ function GigaTable({ dataFetcher }: GigaTableProps) {
     [sortState, searchFilterState]
   );
   return (
-    <CustomTable
-      pagination={pagination}
-      columns={columns}
-      dataSource={data}
-      rowKey={getRowKey}
-      locale={locale}
-    />
+    <>
+      <HeaderToolBox
+        setSearchFilterState={setSearchFilterState}
+        searchFilterState={searchFilterState}
+      />
+      <CustomTable
+        pagination={pagination}
+        columns={columns}
+        dataSource={data}
+        rowKey={getRowKey}
+        locale={locale}
+      />
+    </>
   );
 }
 
