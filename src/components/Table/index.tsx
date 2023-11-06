@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { ColumnsType } from "antd/es/table";
-import NoDataTemplate from "./NoDataTemplate";
 import HeaderToolBox from "./TableHeader/HeaderToolBox";
+import useTableColumns from "./Hooks/useTableColumns";
 import { getRowKey } from "./utility/getRowKey";
 import { paginationInitData, pageSizeOptions } from "./utility/const";
 import { getSortQueryString } from "./utility/getSortQueryString";
-import { getColumns } from "./utility/getColumns";
 import { getPaginationQueryString } from "./utility/getPaginationQueryString";
 import { getSearchFilterQueryString } from "./utility/getSearchFilterQueryString";
-import { useShowingColumns } from "~/store/useShowingColumns";
 import { CustomTable } from "./TableHeader/StyledWrappers";
+import { getLocale } from "./utility/getLocale";
 import {
   DataType,
   GigaTableProps,
@@ -26,13 +24,12 @@ function GigaTable({ dataFetcher }: GigaTableProps) {
     useState<Pagination>(paginationInitData);
   const [sortState, setSortState] = useState<Sort>({});
   const [searchFilterState, setSearchFilterState] = useState<SearchFilter>({});
-  const [defaultColumns, setDefaultColumns] = useState<ColumnsType<DataType>>(
-    []
-  );
-  const [currentColumns, setCurrentColumns] = useState<ColumnsType<DataType>>(
-    []
-  );
-  const { showingColumnsName } = useShowingColumns();
+  const { currentColumns } = useTableColumns({
+    sortState,
+    setSortState,
+    searchFilterState,
+    setSearchFilterState,
+  });
 
   useEffect(() => {
     let isMounted = true;
@@ -55,24 +52,6 @@ function GigaTable({ dataFetcher }: GigaTableProps) {
     };
   }, [dataFetcher, paginationState, sortState, searchFilterState]);
 
-  useEffect(() => {
-    setDefaultColumns(
-      getColumns(
-        sortState,
-        searchFilterState,
-        setSortState,
-        setSearchFilterState
-      )
-    );
-  }, [sortState, searchFilterState]);
-
-  useEffect(() => {
-    const newCurrentColumns = defaultColumns.filter((column) =>
-      showingColumnsName.includes(column.dataIndex)
-    );
-    setCurrentColumns(newCurrentColumns);
-  }, [defaultColumns, showingColumnsName]);
-
   const onPaginationChange = useCallback((page: number, pageSize: number) => {
     setPaginationState({
       current: page,
@@ -92,15 +71,6 @@ function GigaTable({ dataFetcher }: GigaTableProps) {
     [onPaginationChange, paginationState, maxPaginationPage]
   );
 
-  const locale = useMemo(
-    () => ({
-      emptyText: (
-        <NoDataTemplate rows={paginationState.pageSize} isLoading={isLoading} />
-      ),
-    }),
-    [paginationState.pageSize, isLoading]
-  );
-
   return (
     <>
       <HeaderToolBox
@@ -111,8 +81,9 @@ function GigaTable({ dataFetcher }: GigaTableProps) {
         pagination={pagination}
         columns={currentColumns}
         dataSource={data}
+        loading={isLoading}
         rowKey={getRowKey}
-        locale={locale}
+        locale={getLocale(paginationState.pageSize, isLoading)}
       />
     </>
   );

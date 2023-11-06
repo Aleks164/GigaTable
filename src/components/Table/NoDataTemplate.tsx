@@ -3,16 +3,16 @@ import React from "react";
 import styled from "styled-components";
 
 const CustomEmpty = styled(Empty)`
-  height: 80vh;
+  height: 515px;
   &.ant-empty .ant-empty-image {
     height: 80%;
   }
 `;
 
 const CustomSkeleton = styled(Skeleton)`
-  height: 80vh;
+  height: 515px;
   &.ant-skeleton .ant-skeleton-content .ant-skeleton-paragraph > li {
-    height: 35px;
+    height: 28px;
   }
 `;
 

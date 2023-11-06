@@ -31,7 +31,7 @@ export interface FetchedDataResponse {
 }
 
 export interface GigaTableProps {
-  dataFetcher: (queryString?: string) => Promise<FetchedDataResponse>;
+  dataFetcher: (queryString: string) => Promise<FetchedDataResponse>;
 }
 
 export interface HeaderItem {

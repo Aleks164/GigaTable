@@ -16,14 +16,13 @@ const getLastPaginationPage = (response: Response) => {
   return maxPage;
 };
 
-const dataFetcher = async (queryString = "") => {
+const dataFetcher = async (queryString: string) => {
   try {
     const response = await fetch(`${URL}${queryString}`);
     const maxPage = getLastPaginationPage(response);
     const newData = (await response.json()) as DataType[];
     return { newData, maxPage };
   } catch (error) {
-    console.error(error);
     return { newData: [], maxPage: 1 };
   }
 };
